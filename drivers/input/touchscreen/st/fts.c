@@ -6056,6 +6056,7 @@ static int fts_probe_internal(struct i2c_client *client,
 	__set_bit(EV_KEY, info->input_dev->evbit);
 	__set_bit(EV_ABS, info->input_dev->evbit);
 	__set_bit(BTN_TOUCH, info->input_dev->keybit);
+	__set_bit(INPUT_PROP_DIRECT, info->input_dev->propbit);
 	__set_bit(BTN_TOOL_FINGER, info->input_dev->keybit);
 
 	input_mt_init_slots(info->input_dev, TOUCH_ID_MAX, INPUT_MT_DIRECT);
