@@ -1039,6 +1039,11 @@ void stm_ts_read_info_work(struct work_struct *work)
 			work_read_info.work);
 	int ret;
 
+	if(ts == NULL)
+	{
+		return;
+	}
+
 #ifdef TCLM_CONCEPT
 	ret = sec_tclm_check_cal_case(ts->tdata);
 	input_info(true, &ts->client->dev, "%s: sec_tclm_check_cal_case ret: %d \n", __func__, ret);

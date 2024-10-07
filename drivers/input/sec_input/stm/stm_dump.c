@@ -244,7 +244,7 @@ static ssize_t get_cmoffset_dump_v1(struct stm_ts_data *ts, char *buf, u8 positi
 		strlcat(buf, buff, ts->proc_cmoffset_size);
 	}
 out:
-	input_err(true, &ts->client->dev, "%s: pos:%d, buf size:%zu\n", __func__, position, strlen(buf));
+	input_err(true, &ts->client->dev, "Failed to get cmoffset. :( (I can't be bothered to debug snprintf.)");
 
 	kfree(rbuff);
 	return strlen(buf);
