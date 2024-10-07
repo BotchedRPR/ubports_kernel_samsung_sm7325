@@ -2820,6 +2820,13 @@ int stm_ts_probe(struct stm_ts_data *ts)
 	return 0;
 }
 
+void stm_proc_remove_normals()
+{
+	// Remove all of the procfs nodes left over on driver unload.
+	remove_proc_entry("tsp_cmoffset_all", NULL);
+	remove_proc_entry("tsp_cmoffset_all_sub", NULL);
+}
+
 int stm_ts_remove(struct stm_ts_data *ts)
 {
 	input_info(true, &ts->client->dev, "%s\n", __func__);
@@ -2827,6 +2834,8 @@ int stm_ts_remove(struct stm_ts_data *ts)
 #if !IS_ENABLED(CONFIG_SAMSUNG_PRODUCT_SHIP) && IS_ENABLED(CONFIG_TOUCHSCREEN_STM_SPI)
 	stm_ts_tool_proc_remove();
 #endif
+	stm_proc_remove_normals();
+
 	mutex_lock(&ts->modechange);
 	ts->plat_data->shutdown_called = true;
 	mutex_unlock(&ts->modechange);

@@ -191,6 +191,11 @@ static ssize_t get_cmoffset_dump_v1(struct stm_ts_data *ts, char *buf, u8 positi
 	address[2] = 0x92;
 	address[3] = position;
 	ret = stm_ts_wait_for_echo_event(ts, address, 4, 0);
+
+	if(!buf || !ts)
+	{
+		goto out;
+	}
 	if (ret < 0) {
 		snprintf(buf, ts->proc_cmoffset_size, "NG, failed to request data, %d", ret);
 		goto out;
@@ -244,8 +249,6 @@ static ssize_t get_cmoffset_dump_v1(struct stm_ts_data *ts, char *buf, u8 positi
 		strlcat(buf, buff, ts->proc_cmoffset_size);
 	}
 out:
-	input_err(true, &ts->client->dev, "Failed to get cmoffset. :( (I can't be bothered to debug snprintf.)");
-
 	kfree(rbuff);
 	return strlen(buf);
 }
